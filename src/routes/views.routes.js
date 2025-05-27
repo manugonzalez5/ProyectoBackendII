@@ -22,7 +22,6 @@ router.get("/session", (req, res) => {
 });
 
 //Login
-// http://localhost:9090/login?username=pepe&password=qwerty123
 router.get('/login', (req, res) => {
     const { username, password } = req.query;
     if (username !== 'pepe' || password !== 'qwerty123') {
