@@ -1,4 +1,4 @@
-import { ticketModel } from "./models/ticket";
+import { ticketModel } from "./models/ticket.js";
 
 export default class TicketServiceMongo {
     constructor() {

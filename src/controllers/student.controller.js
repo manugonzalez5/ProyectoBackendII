@@ -22,3 +22,46 @@ export async function saveStudent(req, res) {
         res.status(500).send({ error: error, message: "No se pudo guardar el estudiante." });
     }
 }
+
+export async function getStudentById(req, res) {
+    try {
+        const studentId = req.params.id;
+        let student = await studentService.getById(studentId);
+        if (!student) {
+            return res.status(404).send({ message: "Estudiante no encontrado." });
+        }
+        res.send(student);
+    } catch (error) {
+        console.error(error);
+        res.status(500).send({ error: error, message: "No se pudo obtener el estudiante." });
+    }
+}
+
+export async function updateStudent(req, res) {
+    try {
+        const studentId = req.params.id;
+        const studentDto = new StudentsDto(req.body); // Antes paso por el DTO y moldeo la info
+        let result = await studentService.update(studentId, studentDto);
+        if (!result) {
+            return res.status(404).send({ message: "Estudiante no encontrado." });
+        }
+        res.send(result);
+    } catch (error) {
+        console.error(error);
+        res.status(500).send({ error: error, message: "No se pudo actualizar el estudiante." });
+    }
+}
+
+export async function deleteStudent(req, res) {
+    try {
+        const studentId = req.params.id;
+        let result = await studentService.delete(studentId);
+        if (!result) {
+            return res.status(404).send({ message: "Estudiante no encontrado." });
+        }
+        res.send({ message: "Estudiante eliminado exitosamente." });
+    } catch (error) {
+        console.error(error);
+        res.status(500).send({ error: error, message: "No se pudo eliminar el estudiante." });
+    }
+}

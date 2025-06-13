@@ -1,4 +1,4 @@
-import {studentsModel} from "./models/students.js";
+import studentsModel from "./models/students.js";
 
 export default class StudentServiceMongo {
     constructor() {

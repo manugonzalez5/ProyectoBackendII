@@ -1,6 +1,6 @@
 import nodemailer from 'nodemailer';
 import config from '../config/config.js';
-import __dirname from '../util.js';
+import __dirname from '../utils.js';
 
 // Transporter
 const transporter = nodemailer.createTransport({
@@ -52,7 +52,7 @@ export const sendEmail = (req, res) => {
 
 
 const mailOptionsWithAttachments = {
-    from: `Coder Test ${config.gmailAccount}`,
+    from: `Test ${config.gmailAccount}`,
     to: config.gmailAccount,
     subject: "Correo de prueba",
     html: `<div>
