@@ -63,7 +63,8 @@ const initializePassport = () => {
 
 
             } catch (error) {
-                return done("Error registrando el usuario: " + error);
+                console.error("❌ Error en el registro:", error);
+                return done("Error registrando el usuario: " + error.message);
             }
         }
     ))

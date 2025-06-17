@@ -15,7 +15,7 @@ const objConfig_02 = {
 
 
 const studentSchema = new mongoose.Schema({
-    name: objConfig_02,
+    firstName: objConfig_02,
     lastName: objConfig_02,
     email: objConfig_01,
     age: objConfig_02,
