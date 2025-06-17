@@ -1,1 +1,0 @@
-En este proyecto tenes que ingresar con el path "http://localhost:9090/" que te da la opcion de iniciar sesion como usuario o como administrador depende el rol o registrarse.
