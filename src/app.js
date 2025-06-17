@@ -10,7 +10,7 @@ import passport from 'passport';
 import initializePassport from './config/passport.config.js';
 
 // ✅ Cookie parser
-import cookieParser from 'cookie-parser'; // <--- AÑADIDO
+import cookieParser from 'cookie-parser'; 
 
 //Routers a importar:
 import studentRouter from './routes/students.router.js';
