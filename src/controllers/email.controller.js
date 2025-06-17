@@ -104,7 +104,7 @@ export async function requestPasswordReset(req, res) {
 
         await user.save();
 
-        // Configurar transporte nodemailer (ajusta con tus datos)
+        // Configurar transporte nodemailer 
         const transporter = nodemailer.createTransport({
             service: 'Gmail',
             auth: {
@@ -113,7 +113,7 @@ export async function requestPasswordReset(req, res) {
             },
         });
 
-        // Enlace para resetear (puedes ajustar url frontend/backend)
+        // Enlace para resetear 
         const resetUrl = `http://localhost:9090/reset-password/${token}`;
 
         // Email

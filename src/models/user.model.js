@@ -3,22 +3,27 @@ import mongoose from 'mongoose';
 const collection = 'users';
 
 const userSchema = new mongoose.Schema({
-    first_name: { 
-        type: String, 
-        required: true },
-    last_name: { 
-        type: String, 
-        required: true },
-    email: { 
+    first_name: {
         type: String,
-        unique: true, 
-        required: [true, "Email is required"] },
-    age: { 
-        type: Number, 
-        required: true },
-    password: { 
-        type: String, 
-        required: true },
+        required: true
+    },
+    last_name: {
+        type: String,
+        required: true
+    },
+    email: {
+        type: String,
+        unique: true,
+        required: [true, "Email is required"]
+    },
+    age: {
+        type: Number,
+        required: true
+    },
+    password: {
+        type: String,
+        required: true
+    },
     cart: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "carts",
@@ -29,7 +34,7 @@ const userSchema = new mongoose.Schema({
         default: "user",
         enum: ["user", "admin", "user_premium"],
     },
-},{
+}, {
     timestamps: true,
     // versionKey: false, // Deshabilita el parametro "__v"
 });

@@ -1,36 +1,36 @@
 import mongoose from 'mongoose';
 
 const ticketSchema = new mongoose.Schema({
-    code: { 
-        type: String, 
-        unique: true, 
-        default: () => Math.random().toString(36).substring(2, 10).toUpperCase() 
+    code: {
+        type: String,
+        unique: true,
+        default: () => Math.random().toString(36).substring(2, 10).toUpperCase()
     },
     amount: Number,
-    purchaser: { 
-        type: mongoose.Schema.Types.ObjectId, 
-        ref: 'User' 
+    purchaser: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
     },
     products: [{
-        product: { 
-            type: mongoose.Schema.Types.ObjectId, 
-            ref: 'productos' 
+        product: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'productos'
         },
-        name: String, 
-        price: Number, 
+        name: String,
+        price: Number,
         quantity: Number
     }],
-    purchase_datetime: { 
-        type: Date, 
-        default: Date.now 
+    purchase_datetime: {
+        type: Date,
+        default: Date.now
     }
 }, {
-    toJSON: { virtuals: true }, 
-    toObject: { virtuals: true } 
+    toJSON: { virtuals: true },
+    toObject: { virtuals: true }
 });
 
 // Virtual para calcular subtotal
-ticketSchema.virtual('products.subtotal').get(function() {
+ticketSchema.virtual('products.subtotal').get(function () {
     return this.price * this.quantity;
 });
 

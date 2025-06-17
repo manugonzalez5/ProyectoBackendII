@@ -7,7 +7,7 @@ import methodOverride from 'method-override';
 
 // 🔐 Passport
 import passport from 'passport';
-import initializePassport from './config/passport.config.js'; 
+import initializePassport from './config/passport.config.js';
 
 // ✅ Cookie parser
 import cookieParser from 'cookie-parser'; // <--- AÑADIDO
@@ -32,7 +32,7 @@ app.use(express.static(__dirname + '/public'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride('_method'));
-app.use(cookieParser()); 
+app.use(cookieParser());
 
 // 🔐 Inicializar Passport
 initializePassport(); // Registra las estrategias como 'jwt'

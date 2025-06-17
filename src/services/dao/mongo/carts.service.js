@@ -33,19 +33,17 @@ export default class CartsServiceMongo {
         return result.deletedCount > 0;
     }
 
-    // NUEVAS FUNCIONES
+    createCartForUser = async (userId) => {
+        const newCart = new cartsModel({
+            user: userId,
+            products: [],
+            status: 'active',
+            code: new mongoose.Types.ObjectId().toString()
+        });
 
-createCartForUser = async (userId) => {
-    const newCart = new cartsModel({
-        user: userId,
-        products: [],
-        status: 'active',
-        code: new mongoose.Types.ObjectId().toString() 
-    });
-
-    await newCart.save();
-    return newCart.toObject();
-}
+        await newCart.save();
+        return newCart.toObject();
+    }
 
     getCartByUserId = async (userId) => {
         const cart = await cartsModel.findOne({ user: userId });

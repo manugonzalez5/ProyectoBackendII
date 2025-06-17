@@ -32,7 +32,7 @@ export async function saveStudent(req, res) {
             return res.status(400).send({ message: "El email no tiene un formato válido." });
         }
 
-        if (isNaN(age) || age < 0 ) {
+        if (isNaN(age) || age < 0) {
             return res.status(400).send({ message: "La edad debe ser un número válido" });
         }
 
