@@ -7,4 +7,4 @@ export default class StudentsDto {
         this.password = student.password;
         this.fullName = this.name + " " + this.lastName;
     }
-};
+}

@@ -24,6 +24,7 @@ export default class MongoSingleton {
                 {
                     useNewUrlParser: true,
                     useUnifiedTopology: true,
+                    // Cambiar el nivel de escritura a 1 (menos seguro pero más rápido)
                     w: 1,
                 }
             );
@@ -34,3 +35,4 @@ export default class MongoSingleton {
         }
     };
 };
+

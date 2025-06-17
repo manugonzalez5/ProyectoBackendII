@@ -1,4 +1,4 @@
-const form = document.getElementById('loginForm');
+const form = document.getElementById('adminLoginForm');
 
 form.addEventListener('submit', async (e) => {
     e.preventDefault();
@@ -7,9 +7,9 @@ form.addEventListener('submit', async (e) => {
     const obj = {};
     data.forEach((value, key) => obj[key] = value);
 
-    // Validación rápida del frontend
+    // Validación rápida de campos vacíos
     if (!obj.email || !obj.password) {
-        alert('Por favor completa todos los campos.');
+        alert("Por favor completá todos los campos.");
         return;
     }
 
@@ -24,21 +24,20 @@ form.addEventListener('submit', async (e) => {
 
         if (response.status === 200) {
             const json = await response.json();
-            console.log(json);
-            localStorage.setItem('authToken', json.access_token);
-            localStorage.setItem('USER_ID', json.id);
+            console.log("Cookies generadas:");
+            console.log(document.cookie);
+
             alert("¡Login realizado con éxito!");
-            window.location.replace('/users/profile');
+            window.location.replace('/admin/courses');
         } else if (response.status === 401 || response.status === 404) {
             const error = await response.json();
-            alert(error.error || "Credenciales incorrectas");
+            alert(error.error || "Credenciales inválidas.");
         } else {
-            // Otros errores (403, 500, etc)
             const error = await response.json();
-            alert(error.error || "Ocurrió un error inesperado");
+            alert(error.error || "Ocurrió un error inesperado.");
         }
     } catch (err) {
         console.error("Error en la petición:", err);
-        alert("Error de conexión con el servidor");
+        alert("Error de conexión con el servidor.");
     }
 });

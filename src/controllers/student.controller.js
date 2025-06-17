@@ -14,12 +14,43 @@ export async function getAllStudents(req, res) {
 
 export async function saveStudent(req, res) {
     try {
-        const studentDto = new StudentsDto(req.body); // Antes paso por el DTO y moldeo la info
+        const { first_name, last_name, email, age, password } = req.body;
+
+        // Validaciones 
+        if (!first_name || !last_name || !email || !age || !password) {
+            return res.status(400).send({
+                message: "Todos los campos son obligatorios: first_name, last_name, email, age y password."
+            });
+        }
+
+        //  Validaciones específicas
+        if (typeof first_name !== 'string' || typeof last_name !== 'string') {
+            return res.status(400).send({ message: "first_name y last_name deben ser textos." });
+        }
+
+        if (!/^\S+@\S+\.\S+$/.test(email)) {
+            return res.status(400).send({ message: "El email no tiene un formato válido." });
+        }
+
+        if (isNaN(age) || age < 0 ) {
+            return res.status(400).send({ message: "La edad debe ser un número válido" });
+        }
+
+        if (password.length < 6) {
+            return res.status(400).send({ message: "La contraseña debe tener al menos 6 caracteres." });
+        }
+
+        // ✅ Crear DTO y guardar
+        const studentDto = new StudentsDto(req.body);
         let result = await studentService.save(studentDto);
         res.status(201).send(result);
+
     } catch (error) {
         console.error(error);
-        res.status(500).send({ error: error, message: "No se pudo guardar el estudiante." });
+        res.status(500).send({
+            error: error.message || error,
+            message: "No se pudo guardar el estudiante."
+        });
     }
 }
 

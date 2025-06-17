@@ -18,6 +18,11 @@ const courseSchema = new mongoose.Schema({
     title: objConfig_02,
     description: objConfig_02,
     teacherName: objConfig_02,
+    price: {
+        type: Number,
+        required: true,
+        min: 0
+    },
     students: {
         type: Array,
         default: []

@@ -1,9 +1,18 @@
 <div>
     {{#if user}}
     <h1>Tu perfil (sin datos sensibles)</h1>
-    <p>{{user.name}}</p>
+    <p>{{#if user.name}}{{user.name}}{{else}}{{user.first_name}}
+        {{user.last_name}}{{/if}}</p>
     <p>{{user.email}}</p>
     <p>{{user.age}}</p>
+
+    <button onclick="window.location.href='/users/cart'">Ver carrito</button>
+    <button onclick="window.location.href='/users/courses'">Comprar curso</button>
+
+    <form action="/api/sessions/logout" method="POST" style="display:inline;">
+        <button type="submit" style="margin-left: 20px; background-color: #ccc;">Cerrar Sesión</button>
+    </form>
+
     {{else}}
     <h1>Inicia sesión para ver tu perfil</h1>
     <a href="/users/login">Ingresar</a>

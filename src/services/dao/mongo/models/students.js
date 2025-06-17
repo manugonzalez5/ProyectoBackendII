@@ -20,6 +20,14 @@ const studentSchema = new mongoose.Schema({
     email: objConfig_01,
     age: objConfig_02,
     password: objConfig_02,
+    resetPasswordToken: {
+        type: String,
+        default: null
+    },
+    resetPasswordExpires: {
+        type: Date,
+        default: null
+    },
     fullName: {
         type: String
     },

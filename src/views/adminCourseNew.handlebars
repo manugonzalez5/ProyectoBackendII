@@ -1,0 +1,21 @@
+<div>
+    <h1>Crear Nuevo Curso</h1>
+    <form action="/api/courses" method="POST">
+        <label for="title">Título:</label>
+        <input type="text" name="title" required />
+
+        <label for="description">Descripción:</label>
+        <textarea name="description" required></textarea>
+
+        <label for="teacherName">Nombre del Profesor:</label>
+        <input type="text" name="teacherName" required />
+
+        <label for="price">Precio:</label>
+        <input type="number" step="0.01" name="price" required />
+
+        <button type="submit">Crear Curso</button>
+    </form>
+
+    <a href="/admin/courses">Volver al Dashboard</a>
+</div>
+<script src="/js/adminCourses.js"></script>

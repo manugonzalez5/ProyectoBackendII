@@ -26,4 +26,12 @@ export default class StudentServiceMongo {
         let result = await studentsModel.updateOne(filter, value);
         return result;
     }
+    getById = async (id) => {
+        let student = await studentsModel.findById(id);
+        return student ? student.toObject() : null;
+    }
+    delete = async (id) => {
+        let result = await studentsModel.deleteOne({ _id: id });
+        return result.deletedCount > 0;
+    }
 }

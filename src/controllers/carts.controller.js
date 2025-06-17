@@ -1,5 +1,8 @@
-import { cartsService } from "../services/service";
+import mongoose from "mongoose";
+import CartsServiceMongo from "../services/dao/mongo/carts.service.js";
 import CartsDto from "../services/dto/carts.dto.js";
+
+const cartsService = new CartsServiceMongo();
 
 export async function getAllCarts(req, res) {
     try {
@@ -13,7 +16,7 @@ export async function getAllCarts(req, res) {
 
 export async function saveCart(req, res) {
     try {
-        const cartDto = new CartsDto(req.body); // Antes paso por el DTO y moldeo la info
+        const cartDto = new CartsDto(req.body);
         let result = await cartsService.save(cartDto);
         res.status(201).send(result);
     } catch (error) {
@@ -39,7 +42,7 @@ export async function getCartById(req, res) {
 export async function updateCart(req, res) {
     try {
         const cartId = req.params.id;
-        const cartDto = new CartsDto(req.body); // Antes paso por el DTO y moldeo la info
+        const cartDto = new CartsDto(req.body);
         let result = await cartsService.update(cartId, cartDto);
         if (!result) {
             return res.status(404).send({ message: "Carrito no encontrado." });
@@ -67,23 +70,28 @@ export async function deleteCart(req, res) {
 
 export async function addProductToCart(req, res) {
     try {
-        const cartId = req.params.id;
-        const productId = req.body.productId; // Asumiendo que el ID del producto viene en el cuerpo de la solicitud
-        let result = await cartsService.addProduct(cartId, productId);
-        if (!result) {
-            return res.status(404).send({ message: "Carrito o producto no encontrado." });
+        const userId = req.user._id; // viene de Passport
+        const courseId = req.body.courseId;
+
+        // Buscar o crear carrito del usuario
+        let cart = await cartsService.getCartByUserId(userId);
+        if (!cart) {
+            cart = await cartsService.createCartForUser(userId);
         }
-        res.send(result);
+
+        // Agregar producto
+        const result = await cartsService.addProductToCart(cart._id, courseId);
+
+        res.status(200).json({ status: 'success', payload: result });
     } catch (error) {
-        console.error(error);
-        res.status(500).send({ error: error, message: "No se pudo agregar el producto al carrito." });
+        res.status(500).json({ status: 'error', message: error.message });
     }
 }
 
 export async function removeProductFromCart(req, res) {
     try {
         const cartId = req.params.id;
-        const productId = req.body.productId; // Asumiendo que el ID del producto viene en el cuerpo de la solicitud
+        const productId = req.body.productId;
         let result = await cartsService.removeProduct(cartId, productId);
         if (!result) {
             return res.status(404).send({ message: "Carrito o producto no encontrado." });
@@ -95,5 +103,15 @@ export async function removeProductFromCart(req, res) {
     }
 }
 
+export async function createCartForUser(req, res) {
+    try {
+        const userId = req.user._id; // viene de Passport
+        let cart = await cartsService.createCartForUser(userId);
+        res.status(201).send(cart);
+    } catch (error) {
+        console.error(error);
+        res.status(500).send({ error: error, message: "No se pudo crear el carrito para el usuario." });
+    }
+}
 
 

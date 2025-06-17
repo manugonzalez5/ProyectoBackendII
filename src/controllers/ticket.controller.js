@@ -13,7 +13,7 @@ export async function getAllTickets(req, res) {
 
 export async function saveTicket(req, res) {
     try {
-        const ticketDto = new TicketsDto(req.body); // Antes paso por el DTO y moldeo la info
+        const ticketDto = new TicketsDto(req.body);
         let result = await ticketService.save(ticketDto);
         res.status(201).send(result);
     } catch (error) {
@@ -39,7 +39,7 @@ export async function getTicketById(req, res) {
 export async function updateTicket(req, res) {
     try {
         const ticketId = req.params.id;
-        const ticketDto = new TicketsDto(req.body); // Antes paso por el DTO y moldeo la info
+        const ticketDto = new TicketsDto(req.body);
         let result = await ticketService.update(ticketId, ticketDto);
         if (!result) {
             return res.status(404).send({ message: "Ticket no encontrado." });

@@ -1,0 +1,21 @@
+<div>
+    <h1>Cursos disponibles</h1>
+
+    {{#if courses}}
+    <ul>
+        {{#each courses}}
+        <li>
+            <h3>{{this.title}}</h3>
+            <p>{{this.description}}</p>
+            <p><strong>Precio:</strong> ${{this.price}}</p>
+            <button class="add-to-cart-btn" data-id="{{this._id}}">Agregar al carrito</button>
+        </li>
+        {{/each}}
+    </ul>
+    {{else}}
+    <p>No hay cursos disponibles por el momento.</p>
+    {{/if}}
+
+    <button onclick="window.location.href='/users/profile'">Volver al perfil</button>
+</div>
+<script src="/js/addToCart.js"></script>

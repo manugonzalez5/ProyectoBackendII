@@ -23,10 +23,10 @@ form.addEventListener('submit', e => {
 
         if (result.status === 200) {
             result.json()
-            alert("Usuario creado con exito!");
+            alert("Estudiante creado con exito!");
             window.location.replace('/users/login');
         } else {
-            alert("No se pudo crear el usuario!");
+            alert("No se pudo crear el Estudiante!");
         }
     })
 

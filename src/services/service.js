@@ -20,7 +20,5 @@ const cartsDao = new CartsServiceDao();
 
 export const studentService = new StudentRepository(studentDao)
 export const coursesService = new CoursesRepository(coursesDao)
-export const ticketService = new TicketRepository
-(ticketDao)
-export const cartsService = new CartsRepository
-(cartsDao)
+export const ticketService = new TicketRepository(ticketDao)
+export const cartsService = new CartsRepository(cartsDao)

@@ -1,7 +1,8 @@
 import nodemailer from 'nodemailer';
 import config from '../config/config.js';
 import __dirname from '../utils.js';
-
+import crypto from 'crypto';
+import studentsModel from '../services/dao/mongo/models/students.js';
 // Transporter
 const transporter = nodemailer.createTransport({
     service: 'gmail',
@@ -84,5 +85,52 @@ export const sendEmailWithAttachments = (req, res) => {
     } catch (error) {
         console.error(error);
         res.status(500).send({ error: error, message: "No se pudo enviar el email desde:" + config.gmailAccount });
+    }
+}
+
+export async function requestPasswordReset(req, res) {
+    const { email } = req.body;
+
+    try {
+        const user = await studentsModel.findOne({ email });
+        if (!user) return res.status(404).send({ message: "Usuario no encontrado." });
+
+        // Crear token seguro
+        const token = crypto.randomBytes(32).toString('hex');
+
+        // Guardar token y expiración (1 hora)
+        user.resetPasswordToken = token;
+        user.resetPasswordExpires = Date.now() + 3600000; // 1 hora en ms
+
+        await user.save();
+
+        // Configurar transporte nodemailer (ajusta con tus datos)
+        const transporter = nodemailer.createTransport({
+            service: 'Gmail',
+            auth: {
+                user: config.gmailAccount,
+                pass: config.gmailAppPassword,
+            },
+        });
+
+        // Enlace para resetear (puedes ajustar url frontend/backend)
+        const resetUrl = `http://localhost:9090/reset-password/${token}`;
+
+        // Email
+        const mailOptions = {
+            to: user.email,
+            from: config.gmailAccount,
+            subject: 'Recuperación de contraseña',
+            html: `<p>Haz clic en el botón para restablecer tu contraseña:</p>
+            <a href="${resetUrl}">Restablecer contraseña</a>
+            <p>El enlace expira en 1 hora.</p>`,
+        };
+
+        await transporter.sendMail(mailOptions);
+
+        res.send({ message: "Email de recuperación enviado." });
+    } catch (error) {
+        console.error(error);
+        res.status(500).send({ message: "Error al solicitar recuperación de contraseña." });
     }
 }

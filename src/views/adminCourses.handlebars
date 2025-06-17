@@ -1,0 +1,31 @@
+<div>
+    <h1>Dashboard de Cursos</h1>
+    <p>Bienvenido, {{#if user.name}}{{user.name}}{{else}}{{user.first_name}}
+        {{user.last_name}}{{/if}}</p>
+
+    <a href="/admin/courses/new">Crear Nuevo Curso</a>
+
+<form action="/api/sessions/logout" method="POST" style="display:inline;">
+    <button type="submit" style="margin-left: 20px; background-color: #ccc;">Cerrar Sesión</button>
+</form>
+
+
+    {{#if courses.length}}
+    <ul>
+        {{#each courses}}
+        <li>
+            <strong>{{this.title}}</strong> - {{this.description}} - Precio: ${{this.price}}
+            <a href="/admin/courses/edit/{{this._id}}">Editar</a>
+
+            <form action="/api/courses/{{this._id}}?_method=DELETE" method="POST" style="display:inline;">
+                <button type="submit" style="background-color:red; color:white;">Eliminar</button>
+            </form>
+        </li>
+        {{/each}}
+    </ul>
+    {{else}}
+    <p>No hay cursos disponibles.</p>
+    {{/if}}
+</div>
+
+<script src="/js/adminCourses.js"></script>

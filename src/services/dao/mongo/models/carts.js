@@ -2,19 +2,17 @@ import mongoose from 'mongoose';
 
 const collectionName = 'carts';
 
-const objConfig_01 = {
-    type: String,
-    unique: true,
-    required: true
-};
-
-const objConfig_02 = {
-    type: String,
-    required: true
-};
-
 const cartsSchema = new mongoose.Schema({
-    code: objConfig_01,
+    code: {
+        type: String,
+        unique: true,
+        required: true,
+    },
+    user: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'students', 
+        required: true
+    },
     products: {
         type: [
             {
